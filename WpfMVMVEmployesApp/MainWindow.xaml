@@ -1,0 +1,74 @@
+﻿<Window x:Class="WpfMVMVEmployesApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMVMVEmployesApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="900">
+    <Window.Resources>
+        <Style x:Key="stFont">
+            <Setter Property="Control.FontSize" Value="30"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0"
+                 Style="{StaticResource stFont}"
+                 ItemsSource="{Binding Employes}"
+                 SelectedItem="{Binding SelectEmploye}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding 
+                                   Path=Name}"
+                                   Grid.Column="0"/>
+                        <TextBlock Text="{Binding Path=BirthDay, StringFormat='{}{0:MM/dd/yyyy}'}"
+                                   
+                                   Grid.Column="2"/>
+                        <TextBlock Text="{Binding 
+                                   Path=Position}"
+                                   Grid.Column="4"/>
+                    
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="2" 
+                    Style="{StaticResource stFont}">
+            <StackPanel DataContext="{Binding SelectEmploye}">
+                <TextBlock Text="Name:"/>
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Birth Date:"/>
+                <DatePicker SelectedDate="{Binding BirthDay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Position:"/>
+                <TextBox Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Content="Add Employe"
+                        Command="{Binding AddEmployeCommand}"/>
+                <Button Grid.Column="2"
+                        Content="Del Employe"
+                        Command="{Binding RemoveEmployeCommand}"
+                        CommandParameter="{Binding SelectEmploye}"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
