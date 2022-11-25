@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace WpfMVMVEmployesApp
 {
-    internal class AppCommand : ICommand
+    public class AppCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;

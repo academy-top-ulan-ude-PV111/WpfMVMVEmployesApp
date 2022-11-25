@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfMVMVEmployesApp
 {
-    internal class EmployeViewModel : INotifyPropertyChanged
+    public class EmployeViewModel : INotifyPropertyChanged
     {
         private Employe? employe;
 

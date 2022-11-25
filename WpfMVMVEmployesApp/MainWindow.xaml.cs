@@ -26,7 +26,8 @@ namespace WpfMVMVEmployesApp
         {
             InitializeComponent();
 
-            applicationViewModel = new ApplicationViewModel();
+            applicationViewModel = new ApplicationViewModel(new AppDialogService(), new JsonFileService());
+
             applicationViewModel.Employes =  new ObservableCollection<Employe>(new EmployesList().Employes);
             this.DataContext = applicationViewModel;
         }

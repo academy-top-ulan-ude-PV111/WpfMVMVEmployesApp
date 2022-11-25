@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace WpfMVMVEmployesApp
 {
-    internal class Employe
+    public class Employe
     {
         public string? Name { set; get; }
         public DateTime BirthDay { set; get; }

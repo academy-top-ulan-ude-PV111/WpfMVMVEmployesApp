@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMVMVEmployesApp"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900">
     <Window.Resources>
@@ -17,7 +18,26 @@
             <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="3"
+              Grid.Row="0"
+              Style="{StaticResource stFont}">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Command="{Binding OpenCommand}"/>
+                <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
+            </MenuItem>
+        </Menu>
+        <ToolBar Grid.ColumnSpan="3"
+              Grid.Row="1"
+              Style="{StaticResource stFont}">
+            <Button Content="Save" Command="{Binding SaveCommand}"/>
+        </ToolBar>
+        <ListBox Grid.Column="0" Grid.Row="2"
                  Style="{StaticResource stFont}"
                  ItemsSource="{Binding Employes}"
                  SelectedItem="{Binding SelectEmploye}">
@@ -44,8 +64,15 @@
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="MouseDoubleClick">
+                    <b:InvokeCommandAction 
+                                Command="{Binding CopyEmployeCommand}"
+                                CommandParameter="{Binding SelectEmploye}"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
         </ListBox>
-        <StackPanel Grid.Column="2" 
+        <StackPanel Grid.Column="2" Grid.Row="2"
                     Style="{StaticResource stFont}">
             <StackPanel DataContext="{Binding SelectEmploye}">
                 <TextBlock Text="Name:"/>
@@ -55,20 +82,27 @@
                 <TextBlock Text="Position:"/>
                 <TextBox Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0"
-                        Content="Add Employe"
+        </StackPanel>
+        <Grid Grid.ColumnSpan="3"
+              Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                        Content="Add"
                         Command="{Binding AddEmployeCommand}"/>
-                <Button Grid.Column="2"
-                        Content="Del Employe"
+            <Button Grid.Column="2"
+                        Content="Del"
                         Command="{Binding RemoveEmployeCommand}"
                         CommandParameter="{Binding SelectEmploye}"/>
-            </Grid>
-        </StackPanel>
+            <Button Grid.Column="4"
+                        Content="Copy"
+                        Command="{Binding CopyEmployeCommand}"
+                        CommandParameter="{Binding SelectEmploye}"/>
+        </Grid>
     </Grid>
 </Window>
